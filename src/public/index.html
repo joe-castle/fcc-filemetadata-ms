@@ -4,33 +4,112 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <title>FCC Image Abstracter Project</title>
+    <style>
+    .spinner {
+      margin: 0 auto;
+      width: 50px;
+      height: 40px;
+      text-align: center;
+      font-size: 10px;
+      }
+
+      .spinner > div {
+      background-color: #aff0d8;
+      height: 100%;
+      width: 6px;
+      display: inline-block;
+
+      -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+      animation: sk-stretchdelay 1.2s infinite ease-in-out;
+      }
+
+      .spinner .rect2 {
+      -webkit-animation-delay: -1.1s;
+      animation-delay: -1.1s;
+      }
+
+      .spinner .rect3 {
+      -webkit-animation-delay: -1.0s;
+      animation-delay: -1.0s;
+      }
+
+      .spinner .rect4 {
+      -webkit-animation-delay: -0.9s;
+      animation-delay: -0.9s;
+      }
+
+      .spinner .rect5 {
+      -webkit-animation-delay: -0.8s;
+      animation-delay: -0.8s;
+      }
+
+      @-webkit-keyframes sk-stretchdelay {
+      0%, 40%, 100% { -webkit-transform: scaleY(0.4) }
+      20% { -webkit-transform: scaleY(1.0) }
+      }
+
+      @keyframes sk-stretchdelay {
+      0%, 40%, 100% {
+        transform: scaleY(0.4);
+        -webkit-transform: scaleY(0.4);
+      }  20% {
+        transform: scaleY(1.0);
+        -webkit-transform: scaleY(1.0);
+      }
+    }
+    </style>
   </head>
   <body>
-    <div id="root" class='container'>
-      <h1 class="text-center" style="text-decoration:underline">FCC Image Abstracter Project</h1>
-      <h3>Example Image Search</h3>
-      <code style='margin-bottom: 10px; display: block'>https://fcc-image.herokuapp.com/api/imagesearch/programming</code>
-      <pre>
-        [
-          {
-            url: "https://www.greenedu.com/img/ajax-programming.jpg",
-            snippet: "AJAX Programming Courses",
-            thumbnail: "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcR289ZWtkg48qnxeaTe6SQMWZIkIdifZyWiO1azaX8dYKXooWuYXjlVFwo",
-            context: "https://www.greenedu.com/ajax-programming-courses"
-          },
-          {...}
-        ]</pre>
-      <p>You can pass an offset number, e.g: <code>?offset=2</code>, to paginate through the results. 10 results per page.</p>
-      <h3>Example Latest Image Searches</h3>
-      <code style='margin-bottom: 10px; display: block'>https://fcc-image.herokuapp.com/api/latest/imagesearch</code>
-      <pre>
-        [
-          {
-            term: "programming",
-            when: "2016-01-20T12:25:00+00:00"
-          },
-          {...}
-        ]</pre>
+    <div id="root" class="container">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          <h1 class="text-center" style="text-decoration: underline;">FCC Filemetadata Microservce</h1>
+          <p class="lead">Simple test to process file and return the file size.</p>
+          <form enctype="multipart/form-data">
+            <div class="form-group">
+              <label for="file">File Input:</label>
+              <input type="file" id="file" class="form-control" name="file" required>
+            </div>
+            <button type="submit" class="form-control btn btn-info">Submit</button>
+          </form>
+        </div>
+        <div class="col-md-6 col-md-offset-3" id="result" style="margin-top: 10px;">
+          <div class="spinner" style="display: none">
+            <div class="rect1"></div>
+            <div class="rect2"></div>
+            <div class="rect3"></div>
+            <div class="rect4"></div>
+            <div class="rect5"></div>
+          </div>
+          <div class="alert alert-success" style="display: none"></div>
+        </div>
+      </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.js"></script>
+    <script>
+      $(document).ready(function() {
+        $('form').on('submit', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          $.ajax({
+            type: 'POST',
+            url: window.location.origin+'/analyse',
+            data: new FormData(document.querySelector('form')),
+            contentType: false,
+            processData: false,
+            beforeSend: function() {
+              $('.alert').css('display', 'none');
+              $('.spinner').css('display', 'block');
+            },
+            success: function(res) {
+              $('.spinner').css('display', 'none');
+              $('.alert').css('display', 'block');
+              $('.alert').text('File Size: '+res+'B');
+            }
+          });
+        })
+      });
+    </script>
   </body>
 </html>

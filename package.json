@@ -11,7 +11,8 @@
   "author": "Joe Smith <joesmith0488@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.13.3"
+    "express": "^4.13.3",
+    "multer": "^1.1.0"
   },
   "devDependencies": {
     "chai": "^3.4.1",
