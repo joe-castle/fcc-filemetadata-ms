@@ -1,0 +1,21 @@
+{
+  "name": "filemetadata-microservice",
+  "version": "1.0.0",
+  "description": "Filemetadata Microservice Project from FCC",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "NODE_ENV=test mocha --watch",
+    "deploy": "git push heroku master"
+  },
+  "author": "Joe Smith <joesmith0488@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.13.3"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "mocha": "^2.3.4",
+    "supertest": "^1.1.0"
+  }
+}
